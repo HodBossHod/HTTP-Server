@@ -18,7 +18,7 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-            Socket serverSocket1 = this.serverSocket;
+            Socket serverSocket = this.serverSocket.Accept();
             this.LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
@@ -32,12 +32,18 @@ namespace HTTPServer
         public void StartServer()
         {
             // TODO: Listen to connections, with large backlog.
+            serverSocket.Listen(1000);
 
             // TODO: Accept connections in while loop and start a thread for each connection on function "Handle Connection"
             while (true)
             {
                 //TODO: accept connections and start thread for each accepted connection.
 
+                Socket clientSocket = this.serverSocket.Accept();
+                Console.WriteLine("New client accepted: {0}", clientSocket.RemoteEndPoint);
+                Thread newthread = new Thread(new ParameterizedThreadStart (HandleConnection));
+
+                newthread.Start(clientSocket);
             }
         }
 
@@ -45,17 +51,34 @@ namespace HTTPServer
         {
             // TODO: Create client socket 
             // set client socket ReceiveTimeout = 0 to indicate an infinite time-out period
-            
+            Socket clientSocket = (Socket)obj;
+
+            clientSocket.ReceiveTimeout = 0;
             // TODO: receive requests in while true until remote client closes the socket.
+
+
+            //string welcome = "Welcome to my test server";
+            //byte[] data = Encoding.ASCII.GetBytes(welcome);
+            //clientSocket.Send(data);
+            int receivedLength;
+
             while (true)
             {
                 try
                 {
                     // TODO: Receive request
+                    Request request = new Request((string)obj);
+                    receivedLength = clientSocket.Receive((IList<ArraySegment<byte>>)request);
 
                     // TODO: break the while loop if receivedLen==0
+                    if (receivedLength == 0)
+                    {
+                        Console.WriteLine("Client: {0} ended the connection", clientSocket.RemoteEndPoint);
+                        break;
+                    }
 
                     // TODO: Create a Request object using received request string
+
 
                     // TODO: Call HandleRequest Method that returns the response
 
@@ -65,16 +88,19 @@ namespace HTTPServer
                 catch (Exception ex)
                 {
                     // TODO: log exception using Logger class
+ 
                 }
             }
 
             // TODO: close client socket
+            clientSocket.Close();
+
         }
 
         Response HandleRequest(Request request)
         {
             throw new NotImplementedException();
-            string content;
+            string content ;
             try
             {
                 //TODO: check for bad request 
