@@ -12,12 +12,21 @@ namespace HTTPServer
     class Server
     {
         Socket serverSocket;
+        int portNumber;
 
         public Server(int portNumber, string redirectionMatrixPath)
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-            
+            Socket serverSocket1 = this.serverSocket;
+            this.LoadRedirectionRules(redirectionMatrixPath);
+            this.portNumber = portNumber;
+            //Initialize serverSocket object and bind it to local host
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+            IPEndPoint hostEndPoint = new IPEndPoint(IPAddress.Any, portNumber);
+            serverSocket.Bind(hostEndPoint);
+
         }
 
         public void StartServer()
