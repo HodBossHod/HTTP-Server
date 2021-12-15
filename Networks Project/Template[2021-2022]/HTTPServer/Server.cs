@@ -125,7 +125,11 @@ namespace HTTPServer
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
             // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
-            
+            if (Configuration.RedirectionRules != null)
+            {
+                return relativePath;
+            }
+
             return string.Empty;
         }
 
