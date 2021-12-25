@@ -14,11 +14,29 @@ namespace HTTPServer
 
         static void Main(string[] args)
         {
+
+            //---------------------------testing-----------------------------------------
+           // string s = Console.ReadLine() ;
+            /*string s = "POST /test/demo_form.php HTTP/1.1\r\nHost: w3schools.comname1=value1&name2=value2";
+            Request t = new Request(s);
+            t.ParseRequest();
+
+            while(true)
+                Console.ReadLine();*/
+           
+            //--------------------------------------------------------------------------
             // TODO: Call CreateRedirectionRulesFile() function to create the rules of redirection 
-            
+           
+
+           
+
             //Start server
             // 1) Make server object on port 1000
             // 2) Start Server
+
+
+            //closing the log file to save the logs
+            //Logger.sr.Close();
         }
 
         static void CreateRedirectionRulesFile()
