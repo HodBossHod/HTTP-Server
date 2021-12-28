@@ -18,7 +18,7 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-
+         //   LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -107,12 +107,10 @@ namespace HTTPServer
                 //TODO: check for bad request 
 
                 if(!request.ParseRequest())
-                {
-                     
+                {    
                      content =LoadDefaultPage(Configuration.BadRequestDefaultPageName);
                      Response res = new Response(StatusCode.BadRequest, "text/html", content, string.Empty);
                      return res;
-
                 }
 
                //TODO: map the relativeURI in request to get the physical path of the resource.
@@ -120,32 +118,32 @@ namespace HTTPServer
 
 
                  //TODO: check for redirect
-                 string relativePath = GetRedirectionPagePathIFExist(phPass);
-                //if(relativePath.Length!=0)
-                //{
-                //    content = LoadDefaultPage(Configuration.RedirectionDefaultPageName);
 
-                //    Response respon = new Response(StatusCode.Redirect, "text/html", content, relativePath);
 
-                //    return respon;
-                //}
-               
+                string redir = GetRedirectionPagePathIFExist(request.relativeURI);
+                    if(redir!=null)
+                    {
+                        phPass = Configuration.RootPath + "\\"+redir;
+                        Response rerespon = new Response(StatusCode.Redirect, "text/html", phPass, redir);
+                        return rerespon;
+                    }
+                
+
+                
 
                 //TODO: check file exists
-
                 if (!File.Exists(phPass))
                 {
                     content = LoadDefaultPage(Configuration.NotFoundDefaultPageName);
-                    Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,string.Empty);
+                    Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,phPass);
                     return notfoundResponse;
                 }
 
                 //TODO: read the physical file
-
                 content = File.ReadAllText(phPass);
 
                 // Create OK response
-                Response okResponse = new Response(StatusCode.OK, "text/html", content, string.Empty);
+                Response okResponse = new Response(StatusCode.OK, "text/html", content, phPass);
                 return okResponse;
             }
             catch (Exception ex)
@@ -161,22 +159,20 @@ namespace HTTPServer
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
 
-            if (relativePath == "aboutus2.html")
+if (relativePath == "aboutus.html")
             {
-                return relativePath;
+                return "aboutus2.html";
             }
             else
-                return "aboutus2.html";
-            // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
-            //for (int i = 0; i < Configuration.RedirectionRules.Count; i++)
-            //{
-            //    if (Configuration.RedirectionRules.Keys.ElementAt(i).ToString() == relativePath)
-            //    {
-            //         return Configuration.RedirectionRules.Values.ElementAt(i).ToString();
-            //    }
-            //}
+                return null;
+            //Configuration.RedirectionRules return the redirected page path if exists else returns empty
+
+            /*if (Configuration.RedirectionRules.ContainsKey(relativePath))
+            {
+                return Configuration.RedirectionRules[relativePath];
+            }
             
-            //return string.Empty;
+            return null;*/
         }
 
         private string LoadDefaultPage(string defaultPageName)
@@ -195,12 +191,15 @@ namespace HTTPServer
         }
 
         private void LoadRedirectionRules(string filePath)
+
         {
             try
             {
                 // TODO: using the filepath paramter read the redirection rules from file 
 
                 string fileContent = File.ReadAllText(filePath);
+                string [] s=fileContent.Split(',');
+                Configuration.RedirectionRules.Add(s[0], s[1]);
 
 
                  
@@ -210,7 +209,7 @@ namespace HTTPServer
             {
                 // TODO: log exception using Logger class
                 Logger.LogException(ex);
-                Environment.Exit(1);
+                //Environment.Exit(1);
             }
         }
     }
