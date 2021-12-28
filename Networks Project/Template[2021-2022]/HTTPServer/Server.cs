@@ -18,7 +18,7 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-           // Socket serverSocket = this.serverSocket.Accept();
+            //Socket serverSocket = this.serverSocket.Accept();
             //this.LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
@@ -54,11 +54,6 @@ namespace HTTPServer
 
             clientSocket.ReceiveTimeout = 0;
             // TODO: receive requests in while true until remote client closes the socket.
-
-
-            //string welcome = "Welcome to my test server";
-            //byte[] data = Encoding.ASCII.GetBytes(welcome);
-            //clientSocket.Send(data);
             int receivedLength;
 
             while (true)
@@ -108,7 +103,6 @@ namespace HTTPServer
 
         Response HandleRequest(Request request)
         {
-            throw new NotImplementedException();
             string status;
             int code;
             string content;
