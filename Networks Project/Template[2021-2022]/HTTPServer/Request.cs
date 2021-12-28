@@ -74,19 +74,6 @@ namespace HTTPServer
             }
             // Load header lines into HeaderLines dictionary
             LoadHeaderLines();
-            Console.WriteLine("the requst parsing is :\n 1-requst line \n 2-hedres \n 3-balnk line \n if it bost you should find \n\t 4-contntant of the bost\n\n");
-            foreach (string a in requestLines)
-            {
-                Console.WriteLine(a);
-                Console.WriteLine("==========================\r");
-            }
-            Console.WriteLine("the heder dictionary contant is : \n");
-            foreach (var item in headerLines)
-            {
-                Console.WriteLine("key :{0} ---- val :{1}", item.Key, item.Value);
-
-            }
-            Console.WriteLine(Ok);
             return Ok;
         }
 
@@ -140,15 +127,6 @@ namespace HTTPServer
                 Console.WriteLine("Bad Requst HTTP Ver");
                 return false;
             }
-
-            //Pringting the requse line for testing only ...
-            Console.WriteLine("parsing the reqest line you should find :\n 1-Method \n 2-reative url \n 3- HTTP vir\n\n");
-            foreach (string b in reqLine)
-            {
-                Console.WriteLine(b);
-                Console.WriteLine("==========================\r");
-            }
-
             return true;
         }
 
@@ -159,8 +137,8 @@ namespace HTTPServer
 
         private bool LoadHeaderLines()
         {
-            string[] each = requestLines[1].Split('\n');
-            foreach(string s in each)
+            //string[] each = requestLines[1].Split('\n');
+            foreach (string s in requestLines)
             {
                 string[] tmp = s.Split(':');
                 if (tmp.Length < 2)

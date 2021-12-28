@@ -55,6 +55,8 @@ namespace HTTPServer
                     + "Date :" + headerLines[2] + "\r\n"
                     + "Location :" + headerLines[3] + "\r\n" + "\r\n"
                     + content;
+
+                Console.WriteLine(responseString);
             }
             else
             {
@@ -63,6 +65,7 @@ namespace HTTPServer
                        + "Content-length :" + headerLines[1] + "\r\n"
                        + "Date :" + headerLines[2] + "\r\n" + "\r\n"
                        + content;
+                Console.WriteLine(responseString);
             }
 
         }

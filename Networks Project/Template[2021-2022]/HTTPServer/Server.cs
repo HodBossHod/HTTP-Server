@@ -24,6 +24,7 @@ namespace HTTPServer
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint hostEndPoint = new IPEndPoint(IPAddress.Any, portNumber);
             serverSocket.Bind(hostEndPoint);
+            Console.WriteLine("listing...");
 
         }
 
@@ -127,10 +128,7 @@ namespace HTTPServer
                         Response rerespon = new Response(StatusCode.Redirect, "text/html", phPass, redir);
                         return rerespon;
                     }
-                
-
-                
-
+        
                 //TODO: check file exists
                 if (!File.Exists(phPass))
                 {
@@ -158,21 +156,14 @@ namespace HTTPServer
         }
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
-
-if (relativePath == "aboutus.html")
+            LoadRedirectionRules(@"C:\inetpub\wwwroot\fcis1\redirectionRules.txt");
+            foreach (var item in Configuration.RedirectionRules)
             {
-                return "aboutus2.html";
-            }
-            else
-                return null;
-            //Configuration.RedirectionRules return the redirected page path if exists else returns empty
-
-            /*if (Configuration.RedirectionRules.ContainsKey(relativePath))
-            {
-                return Configuration.RedirectionRules[relativePath];
+                if (item.Key == relativePath)
+                    return item.Value;
             }
             
-            return null;*/
+            return null;
         }
 
         private string LoadDefaultPage(string defaultPageName)

@@ -32,10 +32,8 @@ namespace HTTPServer
             Server server =new Server(1000,filePath);
             // 2) Start Server
             server.StartServer();
-
-
             //closing the log file to save the logs
-            
+            Logger.sr.Close();
         }
 
         static void CreateRedirectionRulesFile()
