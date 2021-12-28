@@ -19,7 +19,7 @@ namespace HTTPServer
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
            // Socket serverSocket = this.serverSocket.Accept();
-            this.LoadRedirectionRules(redirectionMatrixPath);
+            //this.LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -120,13 +120,13 @@ namespace HTTPServer
                 {
                      
                      content =LoadDefaultPage(Configuration.BadRequestDefaultPageName);
-                     Response res = new Response(StatusCode.BadRequest, "text.html", content, string.Empty);
+                     Response res = new Response(StatusCode.BadRequest, "text/html", content, Configuration.RootPath + "\\" + Configuration.BadRequestDefaultPageName);
                      return res;
 
                 }
 
                //TODO: map the relativeURI in request to get the physical path of the resource.
-                string phPass = Path.Combine(Configuration.RootPath, request.relativeURI);
+                string phPass = Configuration.RootPath +"\\"+ request.relativeURI;
 
 
                  //TODO: check for redirect
@@ -135,7 +135,7 @@ namespace HTTPServer
                 {
                     content = LoadDefaultPage(Configuration.RedirectionDefaultPageName);
 
-                    Response respon=new Response(StatusCode.Redirect, "text.htm",content ,relativePath);
+                    Response respon=new Response(StatusCode.Redirect, "text/html",content ,relativePath);
 
                     return respon;
                 }

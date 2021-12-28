@@ -18,16 +18,11 @@ namespace HTTPServer
             
 
             //---------------------------testing------------------------------
-            string s = "GET /echo/get/json HTTP/1.1\r\nHost: reqbin.com\nAccept: application/json\n\r\n";
-            Request t = new Request(s);
-            t.ParseRequest();
-
-            while(true)
-                Console.ReadLine();
+           
            
             //--------------------------------------------------------------------------
             // TODO: Call CreateRedirectionRulesFile() function to create the rules of redirection 
-            CreateRedirectionRulesFile();
+            //CreateRedirectionRulesFile();
 
            
             string filePath = AppDomain.CurrentDomain.BaseDirectory + "redirectionRules.txt";

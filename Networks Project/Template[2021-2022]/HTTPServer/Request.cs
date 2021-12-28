@@ -52,7 +52,7 @@ namespace HTTPServer
             string[] separatingStrings = { "\r\n" };
             requestLines = requestString.Split(separatingStrings,System.StringSplitOptions.None).ToList<string>();
             // check that there is atleast 3 lines: Request line, Host Header, Blank line (usually 4 lines with the last empty line for empty content)
-            if (requestLines.Count == 3 || requestLines.Count == 4)
+            if (requestLines.Count >= 3)
             {
                 /*do nothing*/;
             }
@@ -118,7 +118,9 @@ namespace HTTPServer
             //checking the uri 
             if (ValidateIsURI(reqLine[1]))
             {
+
                 relativeURI = reqLine[1];
+                relativeURI = relativeURI.Remove(0, 1);
             }
             else
             {
