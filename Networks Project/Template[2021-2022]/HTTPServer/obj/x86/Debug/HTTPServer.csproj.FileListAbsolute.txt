@@ -7,3 +7,8 @@ C:\Users\Hady Ahmed\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-
 C:\Users\Hady Ahmed\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.csprojResolveAssemblyReference.cache
 C:\Users\Hady Ahmed\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.exe
 C:\Users\Hady Ahmed\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.pdb
+C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.exe
+C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.pdb
+C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.exe
+C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.pdb
+C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.csprojResolveAssemblyReference.cache

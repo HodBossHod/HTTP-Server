@@ -18,12 +18,11 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-            Socket serverSocket = this.serverSocket.Accept();
+           // Socket serverSocket = this.serverSocket.Accept();
             this.LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
             IPEndPoint hostEndPoint = new IPEndPoint(IPAddress.Any, portNumber);
             serverSocket.Bind(hostEndPoint);
 
@@ -67,8 +66,11 @@ namespace HTTPServer
                 try
                 {
                     // TODO: Receive request
-                    Request request = new Request((string)obj);
-                    receivedLength = clientSocket.Receive((IList<ArraySegment<byte>>)request);
+                   
+                    string message = "";
+                    byte[] requestData = new byte[65536];
+                  
+                    receivedLength = clientSocket.Receive(requestData);
 
                     // TODO: break the while loop if receivedLen==0
                     if (receivedLength == 0)
@@ -78,11 +80,17 @@ namespace HTTPServer
                     }
 
                     // TODO: Create a Request object using received request string
-
-
+                     message = Encoding.ASCII.GetString(requestData,0, 	receivedLength );
+                  
+                     Request request = new Request((message));
                     // TODO: Call HandleRequest Method that returns the response
+                    Response response = HandleRequest(request);
+
+                    string ressponseString = response.ResponseString;
 
                     // TODO: Send Response back to client
+                    byte[] respnseByte = Encoding.ASCII.GetBytes(ressponseString);
+                    clientSocket.Send(respnseByte);
 
                 }
                 catch (Exception ex)
@@ -101,36 +109,75 @@ namespace HTTPServer
         Response HandleRequest(Request request)
         {
             throw new NotImplementedException();
-            string content ;
+            string status;
+            int code;
+            string content;
             try
             {
                 //TODO: check for bad request 
 
-                //TODO: map the relativeURI in request to get the physical path of the resource.
+                if(!request.ParseRequest())
+                {
+                     
+                     content =LoadDefaultPage(Configuration.BadRequestDefaultPageName);
+                     Response res = new Response(StatusCode.BadRequest, "text.html", content, string.Empty);
+                     return res;
 
-                //TODO: check for redirect
+                }
+
+               //TODO: map the relativeURI in request to get the physical path of the resource.
+                string phPass = Path.Combine(Configuration.RootPath, request.relativeURI);
+
+
+                 //TODO: check for redirect
+                 string relativePath = GetRedirectionPagePathIFExist(phPass);
+                if(relativePath.Length!=0)
+                {
+                    content = LoadDefaultPage(Configuration.RedirectionDefaultPageName);
+
+                    Response respon=new Response(StatusCode.Redirect, "text.htm",content ,relativePath);
+
+                    return respon;
+                }
+               
 
                 //TODO: check file exists
 
+                if (!File.Exists(phPass))
+                {
+                    content = LoadDefaultPage(Configuration.NotFoundDefaultPageName);
+                    Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,string.Empty);
+                    return notfoundResponse;
+                }
+
                 //TODO: read the physical file
 
+                content = File.ReadAllText(phPass);
+
                 // Create OK response
+                Response okResponse = new Response(StatusCode.OK, "text/html", content, string.Empty);
+                return okResponse;
             }
             catch (Exception ex)
             {
                 // TODO: log exception using Logger class
                 // TODO: in case of exception, return Internal Server Error. 
+                content = LoadDefaultPage(Configuration.InternalErrorDefaultPageName);
+                Response re=new Response(StatusCode.InternalServerError,"text/html",content,string.Empty);
+                return re;
             }
         }
-
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
             // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
-            if (Configuration.RedirectionRules != null)
+            for (int i = 0; i < Configuration.RedirectionRules.Count; i++)
             {
-                return relativePath;
+                if (Configuration.RedirectionRules.Keys.ElementAt(i).ToString() == relativePath)
+                {
+                     return Configuration.RedirectionRules.Values.ElementAt(i).ToString();
+                }
             }
-
+            
             return string.Empty;
         }
 
@@ -138,9 +185,15 @@ namespace HTTPServer
         {
             string filePath = Path.Combine(Configuration.RootPath, defaultPageName);
             // TODO: check if filepath not exist log exception using Logger class and return empty string
-            
-            // else read file and return its content
-            return string.Empty;
+            if (File.Exists(filePath))
+            {
+                return File.ReadAllText(filePath);
+            }
+            else
+            {
+                // else read file and return its content
+                return string.Empty;
+            }
         }
 
         private void LoadRedirectionRules(string filePath)
@@ -148,6 +201,11 @@ namespace HTTPServer
             try
             {
                 // TODO: using the filepath paramter read the redirection rules from file 
+
+                string fileContent = File.ReadAllText(filePath);
+
+
+                 
                 // then fill Configuration.RedirectionRules dictionary 
             }
             catch (Exception ex)

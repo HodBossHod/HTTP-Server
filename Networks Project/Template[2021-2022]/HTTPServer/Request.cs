@@ -50,7 +50,7 @@ namespace HTTPServer
             //throw new NotImplementedException();
             bool Ok =true;
             bool pars =true , reqLin = true,ver = true,balnk = true;
-            //TODO: parse the receivedRequest using the \r\n delimeter   
+            //TODO: parse the receivedRequest using the \r\n delimeter   T
             // check that there is atleast 3 lines: Request line, Host Header, Blank line (usually 4 lines with the last empty line for empty content)
             pars = ParseRequestLine();
             if (pars == false)
