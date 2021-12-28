@@ -35,7 +35,7 @@ namespace HTTPServer
 
 
             //closing the log file to save the logs
-            Logger.sr.Close();
+            
         }
 
         static void CreateRedirectionRulesFile()

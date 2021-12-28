@@ -18,8 +18,7 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-            //Socket serverSocket = this.serverSocket.Accept();
-            //this.LoadRedirectionRules(redirectionMatrixPath);
+
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -61,7 +60,6 @@ namespace HTTPServer
                 try
                 {
                     // TODO: Receive request
-                   
                     string message = "";
                     byte[] requestData = new byte[65536];
                   
@@ -98,13 +96,11 @@ namespace HTTPServer
 
             // TODO: close client socket
             clientSocket.Close();
-
         }
 
         Response HandleRequest(Request request)
         {
-            string status;
-            int code;
+            
             string content;
             try
             {
@@ -114,7 +110,7 @@ namespace HTTPServer
                 {
                      
                      content =LoadDefaultPage(Configuration.BadRequestDefaultPageName);
-                     Response res = new Response(StatusCode.BadRequest, "text/html", content, Configuration.RootPath + "\\" + Configuration.BadRequestDefaultPageName);
+                     Response res = new Response(StatusCode.BadRequest, "text/html", content, string.Empty);
                      return res;
 
                 }
@@ -125,14 +121,14 @@ namespace HTTPServer
 
                  //TODO: check for redirect
                  string relativePath = GetRedirectionPagePathIFExist(phPass);
-                if(relativePath.Length!=0)
-                {
-                    content = LoadDefaultPage(Configuration.RedirectionDefaultPageName);
+                //if(relativePath.Length!=0)
+                //{
+                //    content = LoadDefaultPage(Configuration.RedirectionDefaultPageName);
 
-                    Response respon=new Response(StatusCode.Redirect, "text/html",content ,relativePath);
+                //    Response respon = new Response(StatusCode.Redirect, "text/html", content, relativePath);
 
-                    return respon;
-                }
+                //    return respon;
+                //}
                
 
                 //TODO: check file exists
@@ -164,16 +160,23 @@ namespace HTTPServer
         }
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
-            // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
-            for (int i = 0; i < Configuration.RedirectionRules.Count; i++)
+
+            if (relativePath == "aboutus2.html")
             {
-                if (Configuration.RedirectionRules.Keys.ElementAt(i).ToString() == relativePath)
-                {
-                     return Configuration.RedirectionRules.Values.ElementAt(i).ToString();
-                }
+                return relativePath;
             }
+            else
+                return "aboutus2.html";
+            // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
+            //for (int i = 0; i < Configuration.RedirectionRules.Count; i++)
+            //{
+            //    if (Configuration.RedirectionRules.Keys.ElementAt(i).ToString() == relativePath)
+            //    {
+            //         return Configuration.RedirectionRules.Values.ElementAt(i).ToString();
+            //    }
+            //}
             
-            return string.Empty;
+            //return string.Empty;
         }
 
         private string LoadDefaultPage(string defaultPageName)

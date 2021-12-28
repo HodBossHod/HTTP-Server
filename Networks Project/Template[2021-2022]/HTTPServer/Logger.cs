@@ -16,11 +16,12 @@ namespace HTTPServer
             //Datetime:
             //message:
             // for each exception write its details associated with datetime 
+            
             DateTime now = DateTime.Now;
             string date = now.ToString("h:mm tt");
             sr.WriteLine("Exption Number {0} : Happin in {1}  --> {2} \r\n",noExp , date , ex.Message);
             noExp++;
-            
+            //Logger.sr.Close();
 
         }
     }
