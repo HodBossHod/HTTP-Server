@@ -164,6 +164,7 @@ namespace HTTPServer
                 // TODO: in case of exception, return Internal Server Error. 
                 content = LoadDefaultPage(Configuration.InternalErrorDefaultPageName);
                 Response re=new Response(StatusCode.InternalServerError,"text/html",content,string.Empty);
+                Logger.LogException(ex);
                 return re;
             }
         }
@@ -211,6 +212,7 @@ namespace HTTPServer
             catch (Exception ex)
             {
                 // TODO: log exception using Logger class
+                Logger.LogException(ex);
                 Environment.Exit(1);
             }
         }
