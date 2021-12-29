@@ -16,11 +16,6 @@ namespace HTTPServer
         {
            
             
-
-            //---------------------------testing------------------------------
-           
-           
-            //--------------------------------------------------------------------------
             // TODO: Call CreateRedirectionRulesFile() function to create the rules of redirection 
             CreateRedirectionRulesFile();
 

@@ -18,7 +18,6 @@ namespace HTTPServer
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
             //TODO: initialize this.serverSocket
-         //   LoadRedirectionRules(redirectionMatrixPath);
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -74,7 +73,7 @@ namespace HTTPServer
                     }
 
                     // TODO: Create a Request object using received request string
-                     message = Encoding.ASCII.GetString(requestData,0, 	receivedLength );
+                     message = Encoding.ASCII.GetString(requestData,0, receivedLength );
                   
                      Request request = new Request((message));
                     // TODO: Call HandleRequest Method that returns the response
@@ -133,7 +132,7 @@ namespace HTTPServer
                 if (!File.Exists(phPass))
                 {
                     content = LoadDefaultPage(Configuration.NotFoundDefaultPageName);
-                    Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,phPass);
+                    Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,string.Empty);
                     return notfoundResponse;
                 }
 
@@ -141,7 +140,7 @@ namespace HTTPServer
                 content = File.ReadAllText(phPass);
 
                 // Create OK response
-                Response okResponse = new Response(StatusCode.OK, "text/html", content, phPass);
+                Response okResponse = new Response(StatusCode.OK, "text/html", content, string.Empty);
                 return okResponse;
             }
             catch (Exception ex)

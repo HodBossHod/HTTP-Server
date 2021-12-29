@@ -138,12 +138,33 @@ namespace HTTPServer
         private bool LoadHeaderLines()
         {
             //string[] each = requestLines[1].Split('\n');
-            foreach (string s in requestLines)
+           /* foreach (string s in requestLines)
             {
                 string[] tmp = s.Split(':');
                 if (tmp.Length < 2)
                     return false;
                 headerLines.Add(tmp[0], tmp[1]);
+            }*/
+
+            for (int i = 1; i < requestLines.Count-2; i++)
+            {
+                if(requestLines[i]== "\r")
+                {
+                    continue;
+
+                }
+                else
+                {
+                    string [] tmp = requestLines[i].Split(':');
+                    try
+                    {
+                        headerLines.Add(tmp[0], tmp[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+                }
             }
             return true;
         }

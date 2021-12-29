@@ -1,4 +1,2 @@
-Exption Number 1 : Happin in 8:48 PM  --> An item with the same key has already been added. 
-
-Exption Number 2 : Happin in 8:48 PM  --> An item with the same key has already been added. 
+Exption Number 1 : Happin in 6:25 PM  --> An item with the same key has already been added. 
 
