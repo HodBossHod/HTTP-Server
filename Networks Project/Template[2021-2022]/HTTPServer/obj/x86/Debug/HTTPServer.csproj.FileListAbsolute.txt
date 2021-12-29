@@ -12,3 +12,8 @@ C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\
 C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.exe
 C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.pdb
 C:\Users\hadi\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.exe
+C:\Users\User\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\bin\Debug\HTTPServer.pdb
+C:\Users\User\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.csprojAssemblyReference.cache
+C:\Users\User\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.exe
+C:\Users\User\Documents\GitHub\HTTP-Server\Networks Project\Template[2021-2022]\HTTPServer\obj\x86\Debug\HTTPServer.pdb

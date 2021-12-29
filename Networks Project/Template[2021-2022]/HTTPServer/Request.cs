@@ -21,7 +21,7 @@ namespace HTTPServer
 
     class Request
     {
-        List<string> requestLines;
+        string[] requestLines;
         RequestMethod method;
         public string relativeURI;
         Dictionary<string, string> headerLines;
@@ -39,7 +39,6 @@ namespace HTTPServer
         {
             this.requestString = requestString;
             headerLines = new Dictionary<string, string>();
-            requestLines = new List<string>();
         }
         /// <summary>
         /// Parses the request string and loads the request line, header lines and content, returns false if there is a parsing error
@@ -50,15 +49,15 @@ namespace HTTPServer
             bool Ok =true;
             //TODO: parse the receivedRequest using the \r\n delimeter   
             string[] separatingStrings = { "\r\n" };
-            requestLines = requestString.Split(separatingStrings,System.StringSplitOptions.None).ToList<string>();
+            requestLines = requestString.Split(separatingStrings, System.StringSplitOptions.None);
             // check that there is atleast 3 lines: Request line, Host Header, Blank line (usually 4 lines with the last empty line for empty content)
-            if (requestLines.Count >= 3)
+            if (requestLines.Length >= 3)
             {
                 /*do nothing*/;
             }
             else
             {
-                Console.WriteLine("Bad requset\n");
+                Console.WriteLine("Bad request\n");
                 return false;
             }
             // Parse Request line
@@ -69,7 +68,7 @@ namespace HTTPServer
             // Validate blank line exists
             if (!ValidateBlankLine())
             {
-                Console.WriteLine("Bad Requst blank lines");
+                Console.WriteLine("Bad Request blank lines");
                 return false;
             }
             // Load header lines into HeaderLines dictionary
@@ -79,9 +78,9 @@ namespace HTTPServer
 
         private bool ParseRequestLine()
         {
-           // throw new NotImplementedException
+            // throw new NotImplementedException
 
-            //chheking the all requst line
+            //checking all the request lines
             string[] reqLine = requestLines[0].Split(' ');
             if (reqLine.Length != 3)
             {
@@ -98,7 +97,7 @@ namespace HTTPServer
                 method = RequestMethod.POST;
             else
             {
-                Console.WriteLine("Bad Requst Method");
+                Console.WriteLine("Bad Request Method");
                 return false;
             }
 
@@ -146,7 +145,7 @@ namespace HTTPServer
                 headerLines.Add(tmp[0], tmp[1]);
             }*/
 
-            for (int i = 1; i < requestLines.Count-2; i++)
+            for (int i = 1; i < requestLines.Length-2; i++)
             {
                 if(requestLines[i]== "\r")
                 {

@@ -17,13 +17,14 @@ namespace HTTPServer
         public Server(int portNumber, string redirectionMatrixPath)
         {
             //TODO: call this.LoadRedirectionRules passing redirectionMatrixPath to it
+            LoadRedirectionRules(redirectionMatrixPath);
             //TODO: initialize this.serverSocket
             this.portNumber = portNumber;
             //Initialize serverSocket object and bind it to local host
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint hostEndPoint = new IPEndPoint(IPAddress.Any, portNumber);
             serverSocket.Bind(hostEndPoint);
-            Console.WriteLine("listing...");
+            Console.WriteLine("listening...");
 
         }
 
@@ -75,7 +76,7 @@ namespace HTTPServer
                     // TODO: Create a Request object using received request string
                      message = Encoding.ASCII.GetString(requestData,0, receivedLength );
                   
-                     Request request = new Request((message));
+                     Request request = new Request(message);
                     // TODO: Call HandleRequest Method that returns the response
                     Response response = HandleRequest(request);
 
@@ -114,7 +115,7 @@ namespace HTTPServer
                 }
 
                //TODO: map the relativeURI in request to get the physical path of the resource.
-                string phPass = Configuration.RootPath +"\\"+ request.relativeURI;
+                string phPath = Configuration.RootPath +"\\"+ request.relativeURI;
 
 
                  //TODO: check for redirect
@@ -123,13 +124,13 @@ namespace HTTPServer
                 string redir = GetRedirectionPagePathIFExist(request.relativeURI);
                     if(redir!=null)
                     {
-                        phPass = Configuration.RootPath + "\\"+redir;
-                        Response rerespon = new Response(StatusCode.Redirect, "text/html", phPass, redir);
+                        phPath = Configuration.RootPath + "\\"+redir;
+                        Response rerespon = new Response(StatusCode.Redirect, "text/html", phPath, redir);
                         return rerespon;
                     }
         
                 //TODO: check file exists
-                if (!File.Exists(phPass))
+                if (!File.Exists(phPath))
                 {
                     content = LoadDefaultPage(Configuration.NotFoundDefaultPageName);
                     Response notfoundResponse=new Response(StatusCode.NotFound,"text/html",content,string.Empty);
@@ -137,7 +138,7 @@ namespace HTTPServer
                 }
 
                 //TODO: read the physical file
-                content = File.ReadAllText(phPass);
+                content = File.ReadAllText(phPath);
 
                 // Create OK response
                 Response okResponse = new Response(StatusCode.OK, "text/html", content, string.Empty);
@@ -155,7 +156,8 @@ namespace HTTPServer
         }
         private string GetRedirectionPagePathIFExist(string relativePath)
         {
-            LoadRedirectionRules(@"C:\inetpub\wwwroot\fcis1\redirectionRules.txt");
+            // using Configuration.RedirectionRules return the redirected page path if exists else returns empty
+            
             foreach (var item in Configuration.RedirectionRules)
             {
                 if (item.Key == relativePath)
