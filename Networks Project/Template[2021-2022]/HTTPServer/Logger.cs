@@ -17,7 +17,7 @@ namespace HTTPServer
             DateTime now = DateTime.Now;
             string date = now.ToString("h:mm tt");
             //message:
-            Console.WriteLine("Exption Number {0} : occurred on {1}  --> {2} \r\n", no_of_exceptions, date, ex.Message);
+            sr.WriteLine("Exption Number {0} : occurred on {1}  --> {2} \r\n", no_of_exceptions, date, ex.Message);
             // for each exception write its details associated with datetime 
             no_of_exceptions++;
             sr.Flush();

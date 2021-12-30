@@ -44,7 +44,7 @@ namespace HTTPServer
 
 
             // each line in the file specify a redirection rule
-            f.WriteLine(@"aboutus.html,aboutus2.html");
+            f.WriteLine("aboutus,aboutus2");
             f.Close();
             // example: "aboutus.html,aboutus2.html"
             // means that when making request to aboustus.html,, it redirects me to aboutus2
