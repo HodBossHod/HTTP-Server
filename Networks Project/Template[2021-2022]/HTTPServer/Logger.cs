@@ -15,9 +15,10 @@ namespace HTTPServer
             // TODO: Create log file named log.txt to log exception details in it
             //Datetime:
             DateTime now = DateTime.Now;
-            string date = now.ToString("h:mm tt");
+            //string date = now.ToString("h:mm tt");
+            string time = now.ToString("yyyy'-'MM'-'dd' Time 'HH':'mm' 'tt");
             //message:
-            sr.WriteLine("Exption Number {0} : occurred on {1}  --> {2} \r\n", no_of_exceptions, date, ex.Message);
+            sr.WriteLine("Exception Number {0} : occurred on {1}  --> {2} \r\n", no_of_exceptions, time, ex.Message);
             // for each exception write its details associated with datetime 
             no_of_exceptions++;
             sr.Flush();

@@ -51,6 +51,16 @@ namespace HTTPServer
             // TODO: Create client socket 
             // set client socket ReceiveTimeout = 0 to indicate an infinite time-out period
             Socket clientSocket = (Socket)obj;
+            try
+            {
+                Exception e = new Exception("testing lllll");
+                throw e;
+            }
+            catch (Exception e)
+            {
+
+                Logger.LogException(e);
+            }
 
             clientSocket.ReceiveTimeout = 0;
             // TODO: receive requests in while true until remote client closes the socket.
